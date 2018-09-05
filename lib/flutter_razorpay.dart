@@ -11,10 +11,9 @@ class FlutterRazorpay {
     return version;
   }
 
-  static Future<Null> getRazorPayWindow(String msg) async {
-    Map<String,dynamic> map= <String,dynamic>{};
-    map.putIfAbsent("msg",()=> msg);
-    await _channel.invokeMethod('RazorPayWindow',map);
-    return null;
+  static Future<List<dynamic>> getRazorPayWindow(Map<String,dynamic> map) async {
+    List<dynamic> data=new List();
+    data=await _channel.invokeMethod('RazorPayWindow',map);
+    return data;
   }
 }

@@ -16,20 +16,28 @@ import android.os.Bundle;
 
 public class RazorpayActivity extends Activity  implements PaymentResultListener{
     private static final String TAG = RazorpayActivity.class.getSimpleName();
-
+    public static String EXTRA_PRODUCT_NAME = "name";
+    public static String EXTRA_PRODUCT_IMAGE = "image";
+    public static String EXTRA_PRODUCT_DESCRIPTION = "description";
+    public static String EXTRA_PRODUCT_AMOUNT = "amount";
+    public static String EXTRA_PREFILL_EMAIL = "email";
+    public static String EXTRA_PREFILL_CONTACT = "contact";
+    public static String PAYMENT_ID = "payment_id";
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_razorpay);
+        Intent intent = getIntent();
          /*
          To ensure faster loading of the Checkout form,
           call this method as early as possible in your checkout flow.
          */
         Checkout.preload(getApplicationContext());
 
-        startPayment();
+        startPayment(intent);
     }
-    public void startPayment() {
+    public void startPayment(Intent intent) {
         /*
           You need to pass current activity in order to let Razorpay create CheckoutActivity
          */
@@ -39,16 +47,16 @@ public class RazorpayActivity extends Activity  implements PaymentResultListener
 
         try {
             JSONObject options = new JSONObject();
-            options.put("name", "Razorpay Corp");
-            options.put("description", "Demoing Charges");
+            options.put(EXTRA_PRODUCT_NAME,intent.getStringExtra(EXTRA_PRODUCT_NAME));
+            options.put(EXTRA_PRODUCT_DESCRIPTION,intent.getStringExtra(EXTRA_PRODUCT_DESCRIPTION));
             //You can omit the image option to fetch the image from dashboard
-            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
+            options.put(EXTRA_PRODUCT_IMAGE, intent.getStringExtra(EXTRA_PRODUCT_IMAGE));
             options.put("currency", "INR");
-            options.put("amount", "100");
+            options.put(EXTRA_PRODUCT_AMOUNT,intent.getStringExtra(EXTRA_PRODUCT_AMOUNT));
 
             JSONObject preFill = new JSONObject();
-            preFill.put("email", "test@razorpay.com");
-            preFill.put("contact", "9876543210");
+            preFill.put(EXTRA_PREFILL_EMAIL,intent.getStringExtra(EXTRA_PREFILL_EMAIL));
+            preFill.put(EXTRA_PREFILL_CONTACT,intent.getStringExtra(EXTRA_PREFILL_CONTACT));
 
             options.put("prefill", preFill);
 
@@ -71,7 +79,7 @@ public class RazorpayActivity extends Activity  implements PaymentResultListener
         try {
             Toast.makeText(this, "Payment Successful: " + razorpayPaymentID, Toast.LENGTH_SHORT).show();
             Intent data=new Intent();
-            data.putExtra("paymentId",razorpayPaymentID);
+            data.putExtra(PAYMENT_ID,razorpayPaymentID);
             setResult(Activity.RESULT_OK,data);
             finish();
         } catch (Exception e) {
@@ -90,7 +98,7 @@ public class RazorpayActivity extends Activity  implements PaymentResultListener
         try {
             Toast.makeText(this, "Payment failed: " + code + " " + response, Toast.LENGTH_SHORT).show();
             Intent data=new Intent();
-            data.putExtra("paymentId",response);
+            data.putExtra(PAYMENT_ID,response);
             setResult(Activity.RESULT_CANCELED,data);
             finish();
         } catch (Exception e) {

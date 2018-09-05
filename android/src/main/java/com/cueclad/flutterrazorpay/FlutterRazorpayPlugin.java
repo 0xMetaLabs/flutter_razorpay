@@ -18,7 +18,8 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 public class FlutterRazorpayPlugin implements MethodCallHandler,PluginRegistry.ActivityResultListener {
   private final MethodChannel channel;
   private Activity activity;
-    Result pendingResult;
+  private Result pendingResult;
+    private Map<String, Object> arguments;
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
     final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_razorpay");
@@ -35,16 +36,24 @@ public class FlutterRazorpayPlugin implements MethodCallHandler,PluginRegistry.A
 
   @Override
   public void onMethodCall(MethodCall call, Result result) {
+    pendingResult=result;
     if (call.method.equals("getPlatformVersion")) {
       result.success("Android " + android.os.Build.VERSION.RELEASE);
     } else if (call.method.equals("RazorPayWindow")) {
-      String msg = call.argument("msg").toString();
-      Intent playerIntent = new Intent(activity, RazorpayActivity.class);
-      activity.startActivityForResult(playerIntent, 111);
+      arguments = (Map<String, Object>) call.arguments;
+      Intent razorpayIntent = new Intent(activity, RazorpayActivity.class);
+      razorpayIntent.putExtra(RazorpayActivity.EXTRA_PRODUCT_NAME, (String) arguments.get("name"));
+      razorpayIntent.putExtra(RazorpayActivity.EXTRA_PRODUCT_IMAGE, (String) arguments.get("image"));
+      razorpayIntent.putExtra(RazorpayActivity.EXTRA_PRODUCT_DESCRIPTION, (String) arguments.get("description"));
+      razorpayIntent.putExtra(RazorpayActivity.EXTRA_PRODUCT_AMOUNT, (String) arguments.get("amount"));
+      razorpayIntent.putExtra(RazorpayActivity.EXTRA_PREFILL_EMAIL, (String) arguments.get("email"));
+      razorpayIntent.putExtra(RazorpayActivity.EXTRA_PREFILL_CONTACT, (String) arguments.get("contact"));
+      activity.startActivityForResult(razorpayIntent, 111);
     }
     else {
       result.notImplemented();
     }
+
   }
 
     @Override
@@ -54,19 +63,22 @@ public class FlutterRazorpayPlugin implements MethodCallHandler,PluginRegistry.A
           if (resultCode==Activity.RESULT_OK)
           {
               List<String> data=new ArrayList<>();
-              String response=intent.getStringExtra("paymentId");
+              String response=intent.getStringExtra("payment_id");
               data.add("1");
               data.add(response);
-              pendingResult.success(response);
+              pendingResult.success(data);
           }
           else
           {
               List<String> data=new ArrayList<>();
-              String response=intent.getStringExtra("paymentId");
+              String response=intent.getStringExtra("payment_id");
               data.add("0");
               data.add(response);
-              pendingResult.success(response);
+              pendingResult.success(data);
           }
+          pendingResult = null;
+          arguments = null;
+          return true;
       }
         return false;
     }
