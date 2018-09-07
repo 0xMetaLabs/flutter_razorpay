@@ -34,7 +34,9 @@ class _SimpleRazorState extends State<SimpleRazor> {
     map.putIfAbsent("email",()=> "test@razorpay.com");
     map.putIfAbsent("contact",()=> "9876543210");
     List<dynamic> data = new List();
+      print("before lalalal ***************");
     data = await FlutterRazorpay.getRazorPayWindow(map);
+    print("flutter response ***************");
     print("Damn *************** $data");
   }
 }

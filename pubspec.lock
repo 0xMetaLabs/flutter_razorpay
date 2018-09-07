@@ -38,6 +38,6 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.6"
+    version: "2.0.8"
 sdks:
-  dart: ">=1.21.0 <=2.0.0-dev.58.0.flutter-f981f09760"
+  dart: ">=2.0.0-dev.49.0 <=2.0.0-dev.69.3.flutter-937ee2e8ca"
