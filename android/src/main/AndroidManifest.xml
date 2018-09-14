@@ -9,10 +9,7 @@
         <activity
             android:name=".RazorpayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|navigation"></activity>
-        <!-- Add your API key here rzp_live_ILgsfZCZoFIKMb -->
-        <meta-data
-            android:name="com.razorpay.ApiKey"
-            android:value="rzp_test_mX3hBN7AUkzq4b" />
+
     </application>
 
 </manifest>

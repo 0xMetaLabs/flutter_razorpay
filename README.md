@@ -1,2 +1,3 @@
 # flutter_razorpay
-Razorpay Plugin for Flutter
+
+ A new Flutter Plugin for Razor Payment in Android and Ios

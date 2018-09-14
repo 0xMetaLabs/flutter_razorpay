@@ -48,6 +48,7 @@ public class FlutterRazorpayPlugin implements MethodCallHandler,PluginRegistry.A
       razorpayIntent.putExtra(RazorpayActivity.EXTRA_PRODUCT_AMOUNT, (String) arguments.get("amount"));
       razorpayIntent.putExtra(RazorpayActivity.EXTRA_PREFILL_EMAIL, (String) arguments.get("email"));
       razorpayIntent.putExtra(RazorpayActivity.EXTRA_PREFILL_CONTACT, (String) arguments.get("contact"));
+      razorpayIntent.putExtra(RazorpayActivity.RAZORPAY_KEY, (String) arguments.get("razorpay_key"));
       activity.startActivityForResult(razorpayIntent, 111);
     }
     else {

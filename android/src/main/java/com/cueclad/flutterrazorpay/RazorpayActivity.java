@@ -23,18 +23,14 @@ public class RazorpayActivity extends Activity  implements PaymentResultListener
     public static String EXTRA_PREFILL_EMAIL = "email";
     public static String EXTRA_PREFILL_CONTACT = "contact";
     public static String PAYMENT_ID = "payment_id";
-    
+    public static String RAZORPAY_KEY = "razorpay_key";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_razorpay);
         Intent intent = getIntent();
-         /*
-         To ensure faster loading of the Checkout form,
-          call this method as early as possible in your checkout flow.
-         */
         Checkout.preload(getApplicationContext());
-
         startPayment(intent);
     }
     public void startPayment(Intent intent) {
@@ -44,6 +40,7 @@ public class RazorpayActivity extends Activity  implements PaymentResultListener
         final Activity activity = this;
 
         final Checkout co = new Checkout();
+        co.setKeyID(intent.getStringExtra(RAZORPAY_KEY));
 
         try {
             JSONObject options = new JSONObject();

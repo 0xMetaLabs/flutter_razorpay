@@ -6,8 +6,6 @@ import Razorpay
 public class SwiftFlutterRazorpayPlugin: NSObject, FlutterPlugin, RazorpayPaymentCompletionProtocol {
     var razorpay: Razorpay!
     var _result: FlutterResult!
-    //let API_KEY = "rzp_test_1DP5mmOlF5G5ag"
-    let API_KEY = "rzp_test_mX3hBN7AUkzq4b"
     
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "flutter_razorpay", binaryMessenger: registrar.messenger())
@@ -16,7 +14,7 @@ public class SwiftFlutterRazorpayPlugin: NSObject, FlutterPlugin, RazorpayPaymen
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-  razorpay=Razorpay.initWithKey(API_KEY, andDelegate: self )
+
   _result=result
    if(call.method.elementsEqual("RazorPayWindow"))
     {
@@ -27,6 +25,8 @@ public class SwiftFlutterRazorpayPlugin: NSObject, FlutterPlugin, RazorpayPaymen
         let product_amount = argue!["amount"] as? String
         let product_email = argue!["email"] as? String
         let product_contact = argue!["contact"] as? String
+        let API_KEY = argue!["razorpay_key"] as? String
+        razorpay=Razorpay.initWithKey(API_KEY!, andDelegate: self )
         showPaymentForm(name: product_name!, des:product_des!, image:product_image!, amount:product_amount!,email:product_email!, contact:product_contact!);
     }
     else {

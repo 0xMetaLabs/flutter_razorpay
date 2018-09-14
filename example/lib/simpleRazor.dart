@@ -11,32 +11,39 @@ class _SimpleRazorState extends State<SimpleRazor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: new Text("Hey Razer Pay"),
+        title: new Text("Razer Pay"),
       ),
       body: new RaisedButton(
         onPressed: () {
-          _simpleMethod();
+          razorpay_payment();
         },
         child: new Text(
-          "Click here",
+          "Pay",
           style: new TextStyle(fontSize: 20.0),
         ),
       ),
     );
   }
 
-  _simpleMethod() async {
+  razorpay_payment() async {
     Map<String,dynamic> map=new Map();
-     map.putIfAbsent("name",()=> "SunBurn");
-     map.putIfAbsent("image",()=> "https://firebasestorage.googleapis.com/v0/b/cueclad.appspot.com/o/user_banner.jpg?alt=media&token=2573692d-b182-4261-9f35-3f378428f55d");
-    map.putIfAbsent("description",()=> "Amazing Performance by Something");
-    map.putIfAbsent("amount",()=> "100");
-    map.putIfAbsent("email",()=> "test@razorpay.com");
-    map.putIfAbsent("contact",()=> "9876543210");
-    List<dynamic> data = new List();
-      print("before lalalal ***************");
-    data = await FlutterRazorpay.getRazorPayWindow(map);
-    print("flutter response ***************");
-    print("Damn *************** $data");
+      //// product name
+      map.putIfAbsent("name",()=> "");
+      //// product image
+      map.putIfAbsent("image",()=>  "");
+      //// product description
+      map.putIfAbsent("description",()=> "");
+      //// product amount note: 100 = 1 rupee .
+      map.putIfAbsent("amount",()=> "");
+      //// email id
+      map.putIfAbsent("email",()=> "");
+      //// contact number
+      map.putIfAbsent("contact",()=> "");
+      //// razorpay_key of testing/production
+      map.putIfAbsent("razorpay_key",()=> "");
+    List<dynamic> razor_pay_response = new List();
+
+    razor_pay_response = await FlutterRazorpay.getRazorPayWindow(map);
+    print("response *************** $razor_pay_response");
   }
 }
