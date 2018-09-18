@@ -1,8 +1,8 @@
 name: flutter_razorpay
 description: A new Flutter plugin.
 version: 0.0.1
-author: Cueclad Media Pvt. Ltd.
-homepage:
+author: Cueclad Media Pvt. Ltd. <dev@cueclad.com>
+homepage: https://github.com/cueclad/flutter_razorpay
 
 dependencies:
   flutter:
