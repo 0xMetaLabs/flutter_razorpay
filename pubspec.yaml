@@ -1,5 +1,5 @@
 name: flutter_razorpay
-description: A new Flutter plugin.
+description: An implementation of Razorpay SDK for integrating Razorpay in Android and Ios.
 version: 0.0.1
 author: Cueclad Media Pvt. Ltd. <dev@cueclad.com>
 homepage: https://github.com/cueclad/flutter_razorpay
